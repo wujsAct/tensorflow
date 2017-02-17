@@ -43,15 +43,16 @@ with tf.Graph().as_default():
     ?how to compute
     4. how to compute the partition function
     Z(X) = \sum_(y'_1) \sum_(y'_2)...\sum_(y'_K) exp(\sum_k=1^K a_u(y'_k) + \sum_k=1^K-1 a_p(y'_k,y'_k+1))
-    dynamic programming methods...
+    dynamic programming methods... 
     5. forward/backward or belief propagation
     * computing both tables is often referred to as the forward/backward algorithm for CRFs
       alpha is computed with a forward pass  ===> give the summation from the left
       belta is computed with a backward pass ===> give the summation from the right
      *It has other names
        *belief propagation  / sum product
-      
-      *stable implementation of belief propagation:we should work in log space
+        有时间可以重新推到一下子，不是特别难的，
+        教程：https://www.youtube.com/watch?v=ZYUnyyVgtyA&t=4s
+      *stable implementation of belief propagation:we should work in log space
       
       log \sum_i exp(z_i) = max_i(z_i) + log \sum_i exp(z_i - max_i(z_i))  ===>numerucakkt stable 
     '''
