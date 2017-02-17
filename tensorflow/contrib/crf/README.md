@@ -42,8 +42,19 @@ with tf.Graph().as_default():
     p(y|X) = exp(\sum_k=1^K a_u(y_k) + \sum_k=1^K-1 a_p(y_k,y_k+1))/Z(X)
     ?how to compute
     4. how to compute the partition function
-    
-    '''
+    Z(X) = \sum_(y'_1) \sum_(y'_2)...\sum_(y'_K) exp(\sum_k=1^K a_u(y'_k) + \sum_k=1^K-1 a_p(y'_k,y'_k+1))
+    dynamic programming methods...
+    5. forward/backward or belief propagation
+    * computing both tables is often referred to as the forward/backward algorithm for CRFs
+      alpha is computed with a forward pass  ===> give the summation from the left
+      belta is computed with a backward pass ===> give the summation from the right
+     *It has other names
+       *belief propagation  / sum product
+      
+      *stable implementation of belief propagation:we should work in log space
+      
+      log \sum_i exp(z_i) = max_i(z_i) + log \sum_i exp(z_i - max_i(z_i))  ===>numerucakkt stable 
+    '''
     # Compute unary scores from a linear layer.
     weights = tf.get_variable("weights", [num_features, num_tags])
     matricized_x_t = tf.reshape(x_t, [-1, num_features])
