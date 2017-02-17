@@ -33,17 +33,22 @@ with tf.Graph().as_default():
     x_t = tf.constant(x)
     y_t = tf.constant(y)
     sequence_lengths_t = tf.constant(sequence_lengths)
-
+    '''
+    @read time: 2017/2/17  learning the whole process of linear chain crf
+    strategy1: context window: feed the window to a single neural network!
+    1. unary log-factors: only denpendy on single output(y_k)   a_u(y_k) = a^(L+1)(x_k-1,x_k,x_k+1)y_k
+    2. pairwise log-factors:  a_p(y_k,y_k+1) = 1_(a<=k<K)V_(y_k,y_k+1)
+    3. Then we have: Z(X) is the partition function, very diffcult to compute!
+    p(y|X) = exp(\sum_k=1^K a_u(y_k) + \sum_k=1^K-1 a_p(y_k,y_k+1))/Z(X)
+    4. how to compute the partition function
+    '''
     # Compute unary scores from a linear layer.
     weights = tf.get_variable("weights", [num_features, num_tags])
     matricized_x_t = tf.reshape(x_t, [-1, num_features])
     matricized_unary_scores = tf.matmul(matricized_x_t, weights)
     unary_scores = tf.reshape(matricized_unary_scores,
                               [num_examples, num_words, num_tags])
-    '''
-    @read time: 2017/2/17  learning the whole process of linear chain crf
-    context window: feed the window to a single neural network! 
-    '''
+    
     # Compute the log-likelihood of the gold sequences and keep the transition
     # params for inference at test time.
     log_likelihood, transition_params = tf.contrib.crf.crf_log_likelihood(
