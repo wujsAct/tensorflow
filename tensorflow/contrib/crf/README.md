@@ -40,8 +40,11 @@ with tf.Graph().as_default():
     matricized_unary_scores = tf.matmul(matricized_x_t, weights)
     unary_scores = tf.reshape(matricized_unary_scores,
                               [num_examples, num_words, num_tags])
-
-    # Compute the log-likelihood of the gold sequences and keep the transition
+    '''
+    @read time: 2017/2/17  learning the whole process of linear chain crf
+    context window: feed the window to a single neural network! 
+    '''
+    # Compute the log-likelihood of the gold sequences and keep the transition
     # params for inference at test time.
     log_likelihood, transition_params = tf.contrib.crf.crf_log_likelihood(
         unary_scores, y_t, sequence_lengths_t)
