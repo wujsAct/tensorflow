@@ -40,7 +40,9 @@ with tf.Graph().as_default():
     2. pairwise log-factors:  a_p(y_k,y_k+1) = 1_(a<=k<K)V_(y_k,y_k+1)
     3. Then we have: Z(X) is the partition function, very diffcult to compute!
     p(y|X) = exp(\sum_k=1^K a_u(y_k) + \sum_k=1^K-1 a_p(y_k,y_k+1))/Z(X)
+    ?how to compute
     4. how to compute the partition function
+    
     '''
     # Compute unary scores from a linear layer.
     weights = tf.get_variable("weights", [num_features, num_tags])
